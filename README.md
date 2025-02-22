@@ -1,3 +1,32 @@
+# My experience on Windows
+
+Failed.
+Edit `requirements.txt`:
+- Remove `; sys_platform == 'linux'` from `deepspeed` and `onnxruntime-gpu`.
+- Comment last line: `#https://www.modelscope.cn/models/speech_tts/speech_kantts_ttsfrd/resolve/master/ttsfrd-0.3.9-cp310-cp310-linux_x86_64.whl`
+- Check `python --version` is 3.11.0.
+- [daswer123/deepspeed-windows-wheels](https://github.com/daswer123/deepspeed-windows-wheels) - [Release 0.13.1](https://github.com/daswer123/deepspeed-windows-wheels/releases/tag/13.1)
+- `pip install https://github.com/daswer123/deepspeed-windows-wheels/releases/download/13.1/deepspeed-0.13.1+cu121-cp311-cp311-win_amd64.whl` failed initially without `.venv`. Success on `.venv`.
+
+- Not used [agwosdz/DeepSpeed-Wheels-for-Windows](https://github.com/agwosdz/DeepSpeed-Wheels-for-Windows/releases/tag/DeepSpeed) for cu124: `pip install https://github.com/agwosdz/DeepSpeed-Wheels-for-Windows/releases/download/DeepSpeed/deepspeed-0.16.3+unknown-cp311-cp311-win_amd64_cu124.whl`
+
+- Comment out `deepspeed` in `requirements.txt` cause it's installed by wheels.
+- `pip install Cython`
+pip install -r requirements.txt
+
+```cmd
+python -m venv .venv
+.venv\Scripts\activate
+? set DS_BUILD_OPS=0
+pip install https://github.com/daswer123/deepspeed-windows-wheels/releases/download/13.1/deepspeed-0.13.1+cu121-cp311-cp311-win_amd64.whl
+pip install Cython
+pip install -r requirements.txt
+```
+
+# My experience on WSL
+
+
+
 # BreezyVoice
 
 BreezyVoice is a voice-cloning text-to-speech system specifically adapted for Taiwanese Mandarin, highlighting phonetic control abilities via auxiliary 注音 (bopomofo) inputs. BreezyVoice is partially derived from [CosyVoice](https://github.com/FunAudioLLM/CosyVoice). BreezyVoice is part of the [Breeze2 family](https://huggingface.co/collections/MediaTek-Research/breeze2-family-67863158443a06a72dd29900)
