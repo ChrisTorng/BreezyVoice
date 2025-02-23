@@ -1,18 +1,59 @@
+# My experience on WSL
+
+Restore `requirements.txt`.
+
+For [ChrisTorng/BreezyVoice](https://github.com/ChrisTorng/BreezyVoice)<br>
+VSCode - + - Launch Profile - Ubuntu (WSL)
+
+[NVIDIA GPU Accelerated Computing on WSL 2 — CUDA on WSL 12.8 documentation](https://docs.nvidia.com/cuda/wsl-user-guide/index.html)<br>
+Option 1: Installation of Linux x86 CUDA Toolkit using WSL-Ubuntu Package - Recommended
+
+[CUDA Toolkit 12.8 Downloads | NVIDIA Developer](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_network)<br>
+Linux - x86_64 - WSL-Ubuntu - 2.0 - deb (network)
+
+```bash
+wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+sudo apt-get -y install cuda-toolkit-12-8
+rm cuda-keyring_1.1-1_all.deb
+```
+
+Change CRLF to LF for `run_batch_inference.sh` and `run_single_inference.sh`.
+
+```bash
+python3 --version
+=> 3.10.12
+sudo apt-get update
+sudo apt install python3.10-venv
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+bash run_single_inference.sh
+bash run_batch_inference.sh
+```
+
+NB 3070 the longest one of batch inference takes 45:00 to generate 1:35 voice. Another sample load takes 1:10, inference for 0:11.
+
 # My experience on Windows
 
-Failed.
-Edit `requirements.txt`:
-- Remove `; sys_platform == 'linux'` from `deepspeed` and `onnxruntime-gpu`.
-- Comment last line: `#https://www.modelscope.cn/models/speech_tts/speech_kantts_ttsfrd/resolve/master/ttsfrd-0.3.9-cp310-cp310-linux_x86_64.whl`
-- Check `python --version` is 3.11.0.
-- [daswer123/deepspeed-windows-wheels](https://github.com/daswer123/deepspeed-windows-wheels) - [Release 0.13.1](https://github.com/daswer123/deepspeed-windows-wheels/releases/tag/13.1)
-- `pip install https://github.com/daswer123/deepspeed-windows-wheels/releases/download/13.1/deepspeed-0.13.1+cu121-cp311-cp311-win_amd64.whl` failed initially without `.venv`. Success on `.venv`.
+Failed at all.
 
-- Not used [agwosdz/DeepSpeed-Wheels-for-Windows](https://github.com/agwosdz/DeepSpeed-Wheels-for-Windows/releases/tag/DeepSpeed) for cu124: `pip install https://github.com/agwosdz/DeepSpeed-Wheels-for-Windows/releases/download/DeepSpeed/deepspeed-0.16.3+unknown-cp311-cp311-win_amd64_cu124.whl`
+- Edit `requirements.txt`:<br>
+  Remove `; sys_platform == 'linux'` from `deepspeed` and `onnxruntime-gpu`.
+- Commentted last line:<br>
+  `#https://www.modelscope.cn/models/speech_tts/speech_kantts_ttsfrd/resolve/master/ttsfrd-0.3.9-cp310-cp310-linux_x86_64.whl`
+- Check `python --version` is 3.11.0.
+- [daswer123/deepspeed-windows-wheels](https://github.com/daswer123/deepspeed-windows-wheels) - [Release 0.13.1](https://github.com/daswer123/deepspeed-windows-wheels/releases/tag/13.1)<br>
+  `pip install https://github.com/daswer123/deepspeed-windows-wheels/releases/download/13.1/deepspeed-0.13.1+cu121-cp311-cp311-win_amd64.whl`<br>
+  Failed initially without `.venv`. Success on `.venv`.
+
+- Not used [agwosdz/DeepSpeed-Wheels-for-Windows](https://github.com/agwosdz/DeepSpeed-Wheels-for-Windows/releases/tag/DeepSpeed) for cu124:<br>
+  `pip install https://github.com/agwosdz/DeepSpeed-Wheels-for-Windows/releases/download/DeepSpeed/deepspeed-0.16.3+unknown-cp311-cp311-win_amd64_cu124.whl`
 
 - Comment out `deepspeed` in `requirements.txt` cause it's installed by wheels.
-- `pip install Cython`
-pip install -r requirements.txt
+- `pip install Cython` then `pip install -r requirements.txt`
 
 ```cmd
 python -m venv .venv
@@ -22,10 +63,6 @@ pip install https://github.com/daswer123/deepspeed-windows-wheels/releases/downl
 pip install Cython
 pip install -r requirements.txt
 ```
-
-# My experience on WSL
-
-
 
 # BreezyVoice
 

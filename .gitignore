@@ -1,1 +1,5 @@
 .venv/
+G2PWModel/
+__pycache__/
+*.wav
+*.mp3
